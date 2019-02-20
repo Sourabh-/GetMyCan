@@ -1,0 +1,7 @@
+{
+  "name": "GetMyCan-App",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

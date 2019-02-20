@@ -1,0 +1,8 @@
+{
+	"mongo": {
+		"url": "mongodb://sourabhdebnath:sourabhmlab99*@ds343985.mlab.com:43985/getmycan"
+	},
+	"server": {
+		"port": 8083
+	}
+}
