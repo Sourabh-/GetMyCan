@@ -1,0 +1,35 @@
+.pay-methods {
+    ion-radio {
+        width: 15px;
+        height: 15px;
+    }
+
+    ion-label {
+        font-size: 14px;
+    }
+
+    .req-paytm {
+        display: flex;
+        align-items: center;
+
+        > ion-icon {
+            font-size: 15px;
+            margin-left: 4px;
+            color: #000000;
+        }
+    }
+}
+
+.pay-note {
+    padding-left: 16px;
+}
+
+.sel-pay-method {
+    ion-card-content {
+        padding-left: 0;
+    }
+
+    ion-card-header {
+        padding-bottom: 0;
+    }
+}

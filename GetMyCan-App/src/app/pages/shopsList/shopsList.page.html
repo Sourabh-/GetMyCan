@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Get My Can
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <app-shop-item
+      (handleClick)="handleClick()"></app-shop-item>
+  </ion-list>
+</ion-content>

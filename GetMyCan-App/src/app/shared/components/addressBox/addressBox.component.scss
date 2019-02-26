@@ -1,0 +1,15 @@
+.address-box {
+    display: flex;
+    padding: 5px 5px 5px 10px;
+    align-items: center;
+}
+
+.address {
+    flex: 0 0 80%;
+    color: #737373;
+}
+
+.location-btn {
+    flex: 0 0 20%;
+    text-align: right;
+}

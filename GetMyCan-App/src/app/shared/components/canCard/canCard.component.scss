@@ -1,0 +1,30 @@
+.can-image {
+    width: 72px;
+    height: 72px;
+}
+
+.can-info {
+    display: flex;
+    padding-top: 8px;
+}
+
+.can-header {
+    padding: 5px 5px 5px 16px;
+}
+
+.can-add {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid #cdcdcd;
+
+    ion-icon {
+        font-size: 13px;
+    }
+}
+
+.can-count {
+    border: 1px solid #cdcdcd;
+    font-weight: 600;
+    padding: 2px 5px;
+}

@@ -1,0 +1,41 @@
+ion-card {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.custom-item {
+    display: flex;
+    padding: 5px 16px;
+
+    div:first-child {
+        flex: 0 0 70%;
+    }
+
+    .item-total {
+        flex: 0 0 30%;
+        text-align: right;
+        color: #000000;
+    }
+
+    .pay-total {
+        font-weight: bold;
+        color: #000000;
+    }
+
+    .conv-fee {
+        display: flex;
+        align-items: center;
+
+        > ion-icon {
+            font-size: 15px;
+            margin-left: 4px;
+            color: #000000;
+        }
+    }
+}
+
+.divider {
+    background: #cdcdcd;
+    margin-left: 10px;
+    margin-right: 10px;
+}

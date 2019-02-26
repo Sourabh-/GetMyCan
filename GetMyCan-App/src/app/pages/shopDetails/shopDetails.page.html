@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      The Water Shop
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-address-box></app-address-box>
+  <app-add-info></app-add-info>
+  <app-can-card></app-can-card>
+</ion-content>
+<app-total-card
+  (handleNext)="handleNext()"
+  total="180.00"
+  buttonText="Proceed"></app-total-card>

@@ -4,12 +4,12 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary: #4CAF50;
+  --ion-color-primary-rgb: 76,175,80;
+  --ion-color-primary-contrast: #FFFFFF;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #439a46;
+  --ion-color-primary-tint: #5eb762;
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;
@@ -74,4 +74,32 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** blue **/
+  --ion-color-blue: #3880ff; // 4CAF50;
+  --ion-color-blue-rgb: 56, 128, 255;
+  --ion-color-blue-contrast: #ffffff;
+  --ion-color-blue-contrast-rgb: 255, 255, 255;
+  --ion-color-blue-shade: #3171e0;
+  --ion-color-blue-tint: #4c8dff;
+}
+
+.ion-color-blue {
+  --ion-color-base: var(--ion-color-blue) !important;
+  --ion-color-base-rgb: var(--ion-color-blue-rgb) !important;
+  --ion-color-contrast: var(--ion-color-blue-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-blue-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-blue-shade) !important;
+  --ion-color-tint: var(--ion-color-blue-tint) !important;
+}
+
+@font-face {
+  font-family: Nunito;
+  src: url('../assets/fonts/Nunito.woff2') format('woff2');
+}
+
+*,
+body,
+html {
+  font-family: Nunito;
 }
