@@ -9,6 +9,7 @@ import { AddressBoxComponent } from './components/addressBox/addressBox.componen
 import { CanCardComponent } from './components/canCard/canCard.component';
 import { ItemsTotalCardComponent } from './components/itemsTotalCard/itemsTotalCard.component';
 import { PaymentMethodComponent } from './components/paymentMethod/paymentMethod.component';
+import { DeliveryAddCardComponent } from './components/deliveryAddCard/deliveryAddCard.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { PaymentMethodComponent } from './components/paymentMethod/paymentMethod
     AddressBoxComponent,
     CanCardComponent,
     ItemsTotalCardComponent,
-    PaymentMethodComponent
+    PaymentMethodComponent,
+    DeliveryAddCardComponent
   ],
   exports: [
     MenuComponent, 
@@ -33,7 +35,8 @@ import { PaymentMethodComponent } from './components/paymentMethod/paymentMethod
     AddressBoxComponent,
     CanCardComponent,
     ItemsTotalCardComponent,
-    PaymentMethodComponent
+    PaymentMethodComponent,
+    DeliveryAddCardComponent
   ],
   providers: [],
 })
