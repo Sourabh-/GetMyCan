@@ -10,6 +10,9 @@ import { CanCardComponent } from './components/canCard/canCard.component';
 import { ItemsTotalCardComponent } from './components/itemsTotalCard/itemsTotalCard.component';
 import { PaymentMethodComponent } from './components/paymentMethod/paymentMethod.component';
 import { DeliveryAddCardComponent } from './components/deliveryAddCard/deliveryAddCard.component';
+import { MyAddressCardComponent } from './components/myAddressCard/myAddressCard.component';
+import { AddressFormComponent } from './components/addressForm/addressForm.component';
+import { OrderItemComponent } from './components/orderItem/orderItem.component';
 
 @NgModule({
   imports: [
@@ -25,7 +28,10 @@ import { DeliveryAddCardComponent } from './components/deliveryAddCard/deliveryA
     CanCardComponent,
     ItemsTotalCardComponent,
     PaymentMethodComponent,
-    DeliveryAddCardComponent
+    DeliveryAddCardComponent,
+    MyAddressCardComponent,
+    AddressFormComponent,
+    OrderItemComponent
   ],
   exports: [
     MenuComponent, 
@@ -36,8 +42,12 @@ import { DeliveryAddCardComponent } from './components/deliveryAddCard/deliveryA
     CanCardComponent,
     ItemsTotalCardComponent,
     PaymentMethodComponent,
-    DeliveryAddCardComponent
+    DeliveryAddCardComponent,
+    MyAddressCardComponent,
+    AddressFormComponent,
+    OrderItemComponent
   ],
+  entryComponents: [AddressFormComponent],
   providers: [],
 })
 export class SharedModule {}

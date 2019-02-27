@@ -6,11 +6,15 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="menu">
+  <ion-content class="app-menu">
     <ion-list>
       <ion-item>
         <ion-label>Profile</ion-label>
         <ion-icon name="happy" slot="start"></ion-icon>
+      </ion-item>
+      <ion-item (click)="navigate('address')">
+        <ion-label>My Addresses</ion-label>
+        <ion-icon name="compass" slot="start"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label>Contact Us</ion-label>
@@ -20,7 +24,7 @@
         <ion-label>Settings</ion-label>
         <ion-icon name="cog" slot="start"></ion-icon>
       </ion-item>
-      <ion-item>
+      <ion-item (click)="navigate('seller-login')">
         <ion-label>Seller Login</ion-label>
         <ion-icon name="log-in" slot="start"></ion-icon>
       </ion-item>

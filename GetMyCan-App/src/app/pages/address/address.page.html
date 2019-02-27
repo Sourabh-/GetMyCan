@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>My Addresses</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-my-address></app-my-address>
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openAddressForm()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

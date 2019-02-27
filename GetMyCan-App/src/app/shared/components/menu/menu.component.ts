@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +9,10 @@ import { MenuController } from '@ionic/angular';
 export class MenuComponent implements OnInit {
 
   @Input() content;
-  constructor(private menu: MenuController) { }
+  constructor(
+    private menu: MenuController,
+    public navCtrl: NavController
+  ) { }
 
   ngOnInit() {
 
@@ -27,6 +30,11 @@ export class MenuComponent implements OnInit {
   openCustom() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
+  }
+
+  navigate(type) {
+    this.menu.close();
+    this.navCtrl.navigateForward(`/${type}`);
   }
 
 }
