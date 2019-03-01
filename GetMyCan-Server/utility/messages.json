@@ -1,0 +1,14 @@
+{
+	"invalidParameters": "Invalid parameters",
+	"missingParameters": "Missing parameters",
+	"ise": "Oops! Looks like something isn't right. Please try again after sometime",
+	"incorrectPassword": "Incorrect password",
+	"notAuthorized": "Not authorized",
+	"userNameLength": "User name length should not exceed 20 characters",
+	"passwordLength": "Password length should not exceed 20 characters",
+	"accountIdExists": "Shop with this accountId already exists",
+	"partnerCreated": "Congratulations! New partner created",
+	"noPartnerMatch": "Partner not found",
+	"reasonRequired": "Cancellation reason is required",
+	"invalidOrderId": "Invalid Order Id"
+}

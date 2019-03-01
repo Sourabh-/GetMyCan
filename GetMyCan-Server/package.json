@@ -10,9 +10,13 @@
   "author": "Sourabh Debnath",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
     "express": "^4.16.4",
-    "mongodb": "^3.1.13"
+    "express-session": "^1.15.6",
+    "mongodb": "^3.1.13",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.14.1",

@@ -1,0 +1,9 @@
+{
+    "statusesAllowedToPartner": ["CANCELLEDBYPARTNER", "DELIVERED"],
+    "statusesAllowedToCustomer": ["CANCELLED"],
+    "statuses": ["CANCELLED", "DELIVERED", "CANCELLEDBYPARTNER", "ACTIVE"],
+    "CANCELLEDBYPARTNER": "CANCELLEDBYPARTNER",
+    "CANCELLED": "CANCELLED",
+    "DELIVERED": "DELIVERED",
+    "ACTIVE": "ACTIVE"
+}

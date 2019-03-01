@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-seller-login',
-  templateUrl: './seller-login.page.html',
-  styleUrls: ['./seller-login.page.scss'],
+  selector: 'app-partner-login',
+  templateUrl: './partner-login.page.html',
+  styleUrls: ['./partner-login.page.scss'],
 })
-export class SellerLoginPage implements OnInit {
+export class PartnerLoginPage implements OnInit {
 
   constructor(private navCtrl: NavController) {}
 
@@ -17,7 +17,7 @@ export class SellerLoginPage implements OnInit {
   }
 
   login() {
-    this.navCtrl.navigateRoot('/seller-dashboard');
+    this.navCtrl.navigateRoot('/partner-dashboard');
   }
 
 }

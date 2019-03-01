@@ -4,5 +4,8 @@
 	},
 	"server": {
 		"port": 8083
+	},
+	"partner": {
+		"signupToken": "efe94e0f1ce74c54ab7abd924d01c9a8"
 	}
 }
