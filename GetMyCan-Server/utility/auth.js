@@ -1,5 +1,5 @@
 const fs = require('fs');
-const messages = JSON.parse(fs.readFileSync('./messages.json'));
+const messages = JSON.parse(fs.readFileSync('./utility/messages.json'));
 
 const getToken = (authorization) => {
   if (!authorization) {

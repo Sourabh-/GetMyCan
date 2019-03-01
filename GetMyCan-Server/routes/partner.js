@@ -5,9 +5,9 @@ const bcrypt = require('bcrypt');
 const uuidv1 = require('uuid/v1');
 const saltRounds = 10;
 const authMiddleware = require('../utility/auth');
-const config = fs.readFileSync('../config.json');
-const messages = fs.readFileSync('../utility/messages.json');
-const statuses = fs.readFileSync('../utility/status.json');
+const config = fs.readFileSync('./config.json');
+const messages = fs.readFileSync('./utility/messages.json');
+const statuses = fs.readFileSync('./utility/status.json');
 
 router.post('/signup', (req, res) => {
   if (!req.body.signupToken ||
