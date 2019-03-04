@@ -9,7 +9,7 @@ router.post('/order', (req, res) => {
 
 });
 
-router.delete('/order/:id', (req, res) => {
+router.patch('/order/:id/:status', (req, res) => {
 
 });
 
