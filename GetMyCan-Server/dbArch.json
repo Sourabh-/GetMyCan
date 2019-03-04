@@ -1,0 +1,165 @@
+{
+    "__comment": "Database architecture, this file is just a documentation & is not actually used.",
+    "databaseName": "getmycan",
+    "collections": {
+        "shops": {
+            "keys": {
+                "shopName": {
+                    "type": "string"
+                },
+                "shopDesc": {
+                    "type": "string",
+                    "maxLength": 300
+                },
+                "accountId": {
+                    "type": "string",
+                    "maxLength": "YET TO DECIDE",
+                    "description": "Unique Id for a shop, primary key"
+                },
+                "area": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number",
+                    "values": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                    ]
+                },
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "lat": {
+                            "type": "number"
+                        },
+                        "lng": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "keywords": {
+                    "type": "array",
+                    "properties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "partners": {
+            "keys": {
+                "userName": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "password": {
+                    "type": "hash string",
+                    "maxLength": 20
+                },
+                "accountId": {
+                    "type": "string",
+                    "maxLength": "YET TO DECIDE",
+                    "description": "Unique Id for a shop, foreign key for SHOPS collection"
+                }
+            }
+        },
+        "cans": {
+            "keys": {
+                "accountId": {
+                    "type": "string",
+                    "maxLength": "YET TO DECIDE",
+                    "description": "Unique Id for a shop, foreign key for SHOPS collection"
+                },
+                "cans": {
+                    "< canName >": {
+                        "type": "object",
+                        "properties": {
+                            "price": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "newConnection": {
+                        "depositAmount": {
+                            "type": "number"
+                        },
+                        "refundableAmount": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "orders": {
+            "keys": {
+                "orderId": {
+                    "type": "string",
+                    "description": "Unique Id for each order"
+                },
+                "guestId": {
+                    "type": "string",
+                    "description": "Yet to decide how it will look"
+                },
+                "guestAddress": {
+                    "type": "string"
+                },
+                "accountId": {
+                    "type": "string",
+                    "maxLength": "YET TO DECIDE",
+                    "description": "Unique Id for a shop, foreign key for SHOPS collection"
+                },
+                "itemDetails": {
+                    "type": "object",
+                    "properties": {
+                        "< canName >": {
+                            "type": "object",
+                            "properties": {
+                                "quantity": {
+                                    "type": "number"
+                                },
+                                "totalAmount": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "status": {
+                            "type": "string",
+                            "values": [
+                                "DELIVERED",
+                                "ACTIVE",
+                                "CANCELLED",
+                                "CANCELLEDBYPARTNER"
+                            ]
+                        },
+                        "guestLocation": {
+                            "type": "object",
+                            "properties": {
+                                "lat": {
+                                    "type": "number"
+                                },
+                                "lng": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "createdTime": {
+                            "type": "timestamp"
+                        },
+                        "deliveredTime": {
+                            "type": "timestamp"
+                        },
+                        "cancelledTime": {
+                            "type": "timestamp"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "description": "Reason for cancellation or any other type of reason"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

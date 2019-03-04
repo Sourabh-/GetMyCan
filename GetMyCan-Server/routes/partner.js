@@ -15,9 +15,17 @@ router.post('/signup', (req, res) => {
       !req.body.password ||
       !req.body.accountId ||
       !req.body.shopName ||
-      !req.body.shopDesc) {
+      !req.body.shopDesc ||
+      !req.body.area ||
+      !req.body.location ||
+      (req.body.location &&
+        (!req.body.location.lat || !req.body.location.lng))) {
     res.status(400).json({
       message: messages.missingParameters,
+    });
+  } else if (req.body.keywords && !Array.isArray(req.body.keywords)) {
+    res.status(400).json({
+      message: messages.keywordsShouldBeArray,
     });
   } else if (req.body.signupToken != config.partner.signupToken) {
     res.status(401).json({
@@ -35,6 +43,10 @@ router.post('/signup', (req, res) => {
       shopName: req.body.shopName,
       shopDesc: req.body.shopDesc,
       accountId: req.body.accountId,
+      area: req.body.area,
+      keywords: req.body.keywords || [area],
+      rating: 5,
+      location: req.body.location,
     };
     req.app.db.collection('shops').insertOne(shop).then((rslt) => {
       const partner = {
@@ -114,13 +126,20 @@ router.patch('/order/:id/:status', authMiddleware.auth, (req, res) => {
       message: messages.reasonRequired,
     });
   } else {
+    const update = {
+      status: req.params.status,
+      reason: req.params.reason || '',
+    };
+
+    if (req.params.status == statuses.DELIVERED) {
+      update.deliveredTime = new Date().getTime();
+    } else if (req.params.status == statuses.CANCELLEDBYPARTNER) {
+      update.cancelledTime = new Date().getTime();
+    }
     req.app.db.collection('orders').findOneAndUpdate({
       orderId: req.params.id,
     }, {
-      $set: {
-        status: req.params.status,
-        reason: req.params.reason || '',
-      },
+      $set: update,
     }, {
       projection: {_id: 1},
     }).then((doc) => {

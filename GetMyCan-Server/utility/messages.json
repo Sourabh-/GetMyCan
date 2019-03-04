@@ -7,8 +7,10 @@
 	"userNameLength": "User name length should not exceed 20 characters",
 	"passwordLength": "Password length should not exceed 20 characters",
 	"accountIdExists": "Shop with this accountId already exists",
+	"accountIdDoesNotExists": "Shop with this accountId does not exists",
 	"partnerCreated": "Congratulations! New partner created",
 	"noPartnerMatch": "Partner not found",
 	"reasonRequired": "Cancellation reason is required",
-	"invalidOrderId": "Invalid Order Id"
+	"invalidOrderId": "Invalid Order Id",
+	"keywordsShouldBeArray": "Keywords should be an array"
 }
