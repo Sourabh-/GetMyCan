@@ -10,9 +10,7 @@ const gMapsClient = require('@google/maps').createClient({
 });
 
 router.get('/shops/search', (req, res) => {
-  if (req.query.location ||
-        (req.query.location &&
-            (!req.query.location.lat || !req.query.location.lng))) {
+  if (!req.query.lat || !req.query.lng) {
     res.status(400).json({
       message: messages.missingParameters,
     });
@@ -25,21 +23,39 @@ router.get('/shops/search', (req, res) => {
         .then((docs) => {
           if (docs.length) {
             const result = [];
+            let count = docs.length;
             for (let i=0; i<docs.length; i++) {
               gMapsClient.distanceMatrix({
-                origins: req.query.location,
+                origins: {
+                  lat: req.query.lat,
+                  lng: req.query.lng,
+                },
                 destinations: docs[i].location,
               }, (err, response) => {
-                if (!err) {
-                  console.log(response.json.results);
+                if (!err && response.json && response.json.rows &&
+                    response.json.rows[0] && response.json.rows[0].elements &&
+                    response.json.rows[0].elements[0] &&
+                    response.json.rows[0].elements[0].distance.value <= 2500
+                ) {
+                  docs[i].duration = response.json.rows[0].elements[0]
+                      .duration.text.split(' ')[0];
+                  docs[i].distance = response.json.rows[0].elements[0]
+                      .distance.text.split(' ')[0];
+                  result.push(docs[i]);
+                }
+
+                count--;
+                if (count == 0) {
+                  if (result.length) res.status(200).json(result);
+                  else res.status(204).json();
                 }
               });
             }
-
-            if (result.length) return res.status(200).json(result);
+          } else {
+            res.status(204).json();
           }
-          res.status(204).json();
         }).catch((err) => {
+          console.log(err);
           res.status(500).json({
             message: messages.ise,
           });
