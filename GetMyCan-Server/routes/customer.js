@@ -1,10 +1,13 @@
 const express = require('express');
 const router = new express.Router();
 const fs = require('fs');
-const messages = fs.readFileSync('./utility/messages.json');
-const haversine = require('../utility/haversine');
-const config = fs.readFileSync('./config.json');
-const statuses = fs.readFileSync('./utility/status.json');
+const messages = JSON.parse(fs.readFileSync('./utility/messages.json'));
+const config = JSON.parse(fs.readFileSync('./config.json'));
+const statuses = JSON.parse(fs.readFileSync('./utility/status.json'));
+
+const gMapsClient = require('@google/maps').createClient({
+  key: config.maps.apiKey,
+});
 
 router.get('/shops/search', (req, res) => {
   if (req.query.location ||
@@ -23,11 +26,14 @@ router.get('/shops/search', (req, res) => {
           if (docs.length) {
             const result = [];
             for (let i=0; i<docs.length; i++) {
-              if (haversine(
-                  req.query.location,
-                  docs[i].location) <= config.maps.range) {
-                result.push(docs[i]);
-              }
+              gMapsClient.distanceMatrix({
+                origins: req.query.location,
+                destinations: docs[i].location,
+              }, (err, response) => {
+                if (!err) {
+                  console.log(response.json.results);
+                }
+              });
             }
 
             if (result.length) return res.status(200).json(result);

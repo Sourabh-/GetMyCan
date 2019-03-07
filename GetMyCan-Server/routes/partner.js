@@ -5,12 +5,12 @@ const bcrypt = require('bcrypt');
 const uuidv1 = require('uuid/v1');
 const saltRounds = 10;
 const authMiddleware = require('../utility/auth');
-const config = fs.readFileSync('./config.json');
-const messages = fs.readFileSync('./utility/messages.json');
-const statuses = fs.readFileSync('./utility/status.json');
+const config = JSON.parse(fs.readFileSync('./config.json'));
+const messages = JSON.parse(fs.readFileSync('./utility/messages.json'));
+const statuses = JSON.parse(fs.readFileSync('./utility/status.json'));
 
-router.post('/signup', (req, res) => {
-  if (!req.body.signupToken ||
+router.post('/shop/signup', (req, res) => {
+  if (!req.headers.signupToken ||
       !req.body.userName ||
       !req.body.password ||
       !req.body.accountId ||
@@ -27,7 +27,7 @@ router.post('/signup', (req, res) => {
     res.status(400).json({
       message: messages.keywordsShouldBeArray,
     });
-  } else if (req.body.signupToken != config.partner.signupToken) {
+  } else if (req.headers.signupToken != config.partner.signupToken) {
     res.status(401).json({
       message: messages.notAuthorized,
     });
@@ -47,6 +47,19 @@ router.post('/signup', (req, res) => {
       keywords: req.body.keywords || [area],
       rating: 5,
       location: req.body.location,
+      disabled: false,
+      workingHours: req.body.workingHours ? {
+        from: req.body.workingHours.from ||
+              Number(config.partner.workingHours.from),
+        to: req.body.workingHours.to ||
+            Number(config.partner.workingHours.from),
+        closedOn: Array.isArray(req.body.workingHours.closedOn) ?
+                  req.body.workingHours.closedOn : [],
+      } : {
+        from: 0500,
+        to: 2300,
+        closedOn: [],
+      },
     };
     req.app.db.collection('shops').insertOne(shop).then((rslt) => {
       const partner = {
@@ -56,6 +69,49 @@ router.post('/signup', (req, res) => {
       };
 
       return req.app.db.collection('partners').insertOne(partner);
+    }).then((rslt) => {
+      if (req.body.cans && Object.keys(req.body.cans).length > 1) {
+        const cans = {
+          accountId: req.body.accountId,
+          cans: {
+            newConnection: {
+              'depositAmount': req.body.cans.newConnection.depositAmount &&
+                  Number.isInteger(
+                      req.body.cans.newConnection.depositAmount
+                  ) &&
+                  req.body.cans.newConnection.depositAmount > 0 ?
+                  req.body.cans.newConnection.depositAmount :
+                  config.partner.cans.newConnection.depositAmount,
+              'refundableAmount': req.body.cans.newConnection.refundableAmount
+                  &&
+                  Number.isInteger(
+                      req.body.cans.newConnection.refundableAmount
+                  ) &&
+                  req.body.cans.newConnection.refundableAmount > 0
+                  ?
+                  req.body.cans.newConnection.refundableAmount :
+                  config.partner.cans.newConnection.refundableAmount,
+            },
+          },
+        };
+
+        for (const key in req.body.cans) {
+          if (key != 'newConnection') {
+            cans.cans[key] = {
+              price: req.body.cans[key].price &&
+                  Number.isInteger(req.body.cans[key].price) &&
+                  req.body.cans[key].price > 0 ? req.body.cans[key].price :
+                  config.partner.cans.defaultCanPrice,
+            };
+          }
+        }
+
+        req.app.db.collection('cans').insertOne(can);
+      } else {
+        res.status(201).json({
+          message: messages.partnerCreated,
+        });
+      }
     }).then((rslt) => {
       res.status(201).json({
         message: messages.partnerCreated,
@@ -190,6 +246,62 @@ router.get('/orders/search', authMiddleware.auth, (req, res) => {
       message: messages.ise,
     });
   });
+});
+
+router.put('/cans/update', authMiddleware.auth, (req, res) => {
+  if (req.body.cans && Object.keys(req.body.cans).length >= 1) {
+    const cans = {
+      accountId: req.session.accountId,
+      cans: {
+        newConnection: {
+          'depositAmount': req.body.cans.newConnection.depositAmount &&
+              Number.isInteger(
+                  req.body.cans.newConnection.depositAmount
+              ) &&
+              req.body.cans.newConnection.depositAmount > 0 ?
+              req.body.cans.newConnection.depositAmount :
+              config.partner.cans.newConnection.depositAmount,
+          'refundableAmount': req.body.cans.newConnection.refundableAmount &&
+              Number.isInteger(
+                  req.body.cans.newConnection.refundableAmount
+              ) &&
+              req.body.cans.newConnection.refundableAmount > 0
+              ?
+              req.body.cans.newConnection.refundableAmount :
+              config.partner.cans.newConnection.refundableAmount,
+        },
+      },
+    };
+
+    for (const key in req.body.cans) {
+      if (key != 'newConnection') {
+        cans.cans[key] = {
+          price: req.body.cans[key].price &&
+              Number.isInteger(req.body.cans[key].price) &&
+              req.body.cans[key].price > 0 ? req.body.cans[key].price :
+              config.partner.cans.defaultCanPrice,
+        };
+      }
+    }
+
+    req.app.db.collection('cans').updateOne({
+      accountId: req.session.accountId,
+    }, {
+      $set: cans,
+    }, {
+      upsert: true,
+    }).then((rslt) => {
+
+    }).catch((err) => {
+      res.status(500).json({
+        message: messages.ise,
+      });
+    });
+  } else {
+    res.status(400).json({
+      message: messages.missingParameters,
+    });
+  }
 });
 
 module.exports = router;

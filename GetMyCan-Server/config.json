@@ -6,9 +6,19 @@
 		"port": 8083
 	},
 	"partner": {
-		"signupToken": "efe94e0f1ce74c54ab7abd924d01c9a8"
+		"signupToken": "efe94e0f1ce74c54ab7abd924d01c9a8",
+		"workingHours": {
+			"from": "0500",
+			"to": "2300"
+		},
+		"defaultCanPrice": 40,
+		"newConnection": {
+			"depositAmount": 150,
+			"refundableAmount": 100
+		}
 	},
 	"maps": {
-		"range": 2
+		"range": 2,
+		"apiKey": "AIzaSyBlQLlpyevOLWoWPtAuXcKvGBz-i1aBroE"
 	}
 }
