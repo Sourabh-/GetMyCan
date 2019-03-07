@@ -21,8 +21,8 @@ let MongoApp;
     }
 
     MongoClient.connect(config.mongo.url, {useNewUrlParser: true})
-        .then((db) => {
-          this.db = db;
+        .then((client) => {
+          this.db = client.db(config.mongo.database);
           cb(db);
         })
         .catch((err) => {

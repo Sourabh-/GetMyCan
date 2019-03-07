@@ -10,7 +10,7 @@ const messages = JSON.parse(fs.readFileSync('./utility/messages.json'));
 const statuses = JSON.parse(fs.readFileSync('./utility/status.json'));
 
 router.post('/shop/signup', (req, res) => {
-  if (!req.headers.signupToken ||
+  if (!req.headers.signuptoken ||
       !req.body.userName ||
       !req.body.password ||
       !req.body.accountId ||
@@ -27,7 +27,7 @@ router.post('/shop/signup', (req, res) => {
     res.status(400).json({
       message: messages.keywordsShouldBeArray,
     });
-  } else if (req.headers.signupToken != config.partner.signupToken) {
+  } else if (req.headers.signuptoken != config.partner.signupToken) {
     res.status(401).json({
       message: messages.notAuthorized,
     });
@@ -49,9 +49,9 @@ router.post('/shop/signup', (req, res) => {
       location: req.body.location,
       disabled: false,
       workingHours: req.body.workingHours ? {
-        from: req.body.workingHours.from ||
+        from: req.body.workingHours.from ? Number(req.body.workingHours.from) :
               Number(config.partner.workingHours.from),
-        to: req.body.workingHours.to ||
+        to: req.body.workingHours.to ? Number(req.body.workingHours.to) :
             Number(config.partner.workingHours.from),
         closedOn: Array.isArray(req.body.workingHours.closedOn) ?
                   req.body.workingHours.closedOn : [],
@@ -61,6 +61,7 @@ router.post('/shop/signup', (req, res) => {
         closedOn: [],
       },
     };
+
     req.app.db.collection('shops').insertOne(shop).then((rslt) => {
       const partner = {
         userName: req.body.userName,
@@ -105,8 +106,7 @@ router.post('/shop/signup', (req, res) => {
             };
           }
         }
-
-        req.app.db.collection('cans').insertOne(can);
+        req.app.db.collection('cans').insertOne(cans);
       } else {
         res.status(201).json({
           message: messages.partnerCreated,
@@ -117,12 +117,13 @@ router.post('/shop/signup', (req, res) => {
         message: messages.partnerCreated,
       });
     }).catch((err) => {
-        // Need to check for both errors here! : TO DO
-        (err.code == 11000) ? res.status(400).json({
-          message: messages.accountIdExists,
-        }): res.status(500).json({
-          message: messages.ise,
-        });
+      console.log(err);
+      // Need to check for both errors here! : TO DO
+      (err.code == 11000) ? res.status(400).json({
+        message: messages.accountIdExists,
+      }): res.status(500).json({
+        message: messages.ise,
+      });
     });
   }
 });
