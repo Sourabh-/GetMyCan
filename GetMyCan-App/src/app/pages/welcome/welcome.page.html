@@ -1,11 +1,11 @@
 <ion-content>
   <h4 text-center>Set Delivery Location</h4>
   <div class="loc-btn">
-      <ion-button color="primary" expand="block" fill="outline">
+      <ion-button color="primary" expand="block" fill="outline" (click)="getCurrLoc()">
         <ion-icon slot="start" name="locate" class="icon-grey"></ion-icon>
         Pick Current Location
       </ion-button>
-      <ion-button color="primary" expand="block" fill="outline">
+      <ion-button color="primary" expand="block" fill="outline" (click)="showSearch()">
           <ion-icon slot="start" name="navigate" class="icon-grey"></ion-icon>
           Some Other Location
       </ion-button>

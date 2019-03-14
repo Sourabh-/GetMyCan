@@ -23,34 +23,42 @@ router.get('/shops/search', (req, res) => {
         .then((docs) => {
           if (docs.length) {
             const result = [];
-            let count = docs.length;
-            for (let i=0; i<docs.length; i++) {
-              gMapsClient.distanceMatrix({
-                origins: {
-                  lat: req.query.lat,
-                  lng: req.query.lng,
-                },
-                destinations: docs[i].location,
-              }, (err, response) => {
-                if (!err && response.json && response.json.rows &&
-                    response.json.rows[0] && response.json.rows[0].elements &&
-                    response.json.rows[0].elements[0] &&
-                    response.json.rows[0].elements[0].distance.value <= 2500
-                ) {
-                  docs[i].duration = response.json.rows[0].elements[0]
-                      .duration.text.split(' ')[0];
-                  docs[i].distance = response.json.rows[0].elements[0]
-                      .distance.text.split(' ')[0];
-                  result.push(docs[i]);
-                }
-
-                count--;
-                if (count == 0) {
-                  if (result.length) res.status(200).json(result);
-                  else res.status(204).json();
-                }
+            const latLngArr = [];
+            for (let i=0; i < docs.length; i++) {
+              latLngArr.push({
+                lat: docs[i].location.lat, lng: docs[i].location.lng,
               });
             }
+
+            gMapsClient.distanceMatrix({
+              origins: latLngArr,
+              destinations: [{
+                lat: Number(req.query.lat),
+                lng: Number(req.query.lng),
+              }],
+            }, (err, response) => {
+              if (!err && response.json && response.json.rows &&
+                    response.json.rows.length
+              ) {
+                const rows = response.json.rows;
+                for (let i=0; i < rows.length; i++) {
+                  if (rows[i].elements && rows[i].elements[0] &&
+                       rows[i].elements[0].distance.value <= 2500) {
+                    docs[i].duration = rows[i].elements[0]
+                        .duration.text.split(' ')[0];
+                    docs[i].distance = rows[i].elements[0]
+                        .distance.text.split(' ')[0];
+                    result.push(docs[i]);
+                  }
+                }
+              }
+
+
+              if (result.length) {
+                return res.status(200).json(result);
+              }
+              res.status(204).json();
+            });
           } else {
             res.status(204).json();
           }

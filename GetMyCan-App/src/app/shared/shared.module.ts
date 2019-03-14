@@ -13,6 +13,7 @@ import { DeliveryAddCardComponent } from './components/deliveryAddCard/deliveryA
 import { MyAddressCardComponent } from './components/myAddressCard/myAddressCard.component';
 import { AddressFormComponent } from './components/addressForm/addressForm.component';
 import { OrderItemComponent } from './components/orderItem/orderItem.component';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   imports: [
@@ -48,6 +49,6 @@ import { OrderItemComponent } from './components/orderItem/orderItem.component';
     OrderItemComponent
   ],
   entryComponents: [AddressFormComponent],
-  providers: [],
+  providers: [StorageService],
 })
 export class SharedModule {}
